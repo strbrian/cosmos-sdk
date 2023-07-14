@@ -46,7 +46,6 @@ message Params {
     (cosmos_proto.scalar)  = "cosmos.Dec",
     (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
     (gogoproto.nullable)   = false,
-    (amino.encoding)       = "cosmos_dec_bytes",
     (amino.dont_omitempty) = true
   ];
   google.protobuf.Duration downtime_jail_duration = 3 [
@@ -58,14 +57,12 @@ message Params {
     (cosmos_proto.scalar)  = "cosmos.Dec",
     (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
     (gogoproto.nullable)   = false,
-    (amino.encoding)       = "cosmos_dec_bytes",
     (amino.dont_omitempty) = true
   ];
   bytes slash_fraction_downtime = 5 [
     (cosmos_proto.scalar)  = "cosmos.Dec",
     (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
     (gogoproto.nullable)   = false,
-    (amino.encoding)       = "cosmos_dec_bytes",
     (amino.dont_omitempty) = true
   ];
 }
