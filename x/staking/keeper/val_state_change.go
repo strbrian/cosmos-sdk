@@ -26,6 +26,7 @@ func (k Keeper) BlockValidatorUpdates(ctx sdk.Context) []abci.ValidatorUpdate {
 	// unbonded after the Endblocker (go from Bonded -> Unbonding during
 	// ApplyAndReturnValidatorSetUpdates and then Unbonding -> Unbonded during
 	// UnbondAllMatureValidatorQueue).
+	fmt.Println("============== staking => BlockValidatorUpdates called=============")
 	validatorUpdates, err := k.ApplyAndReturnValidatorSetUpdates(ctx)
 	if err != nil {
 		panic(err)
@@ -126,6 +127,7 @@ func (k Keeper) ApplyAndReturnValidatorSetUpdates(ctx sdk.Context) (updates []ab
 	iterator := k.ValidatorsPowerStoreIterator(ctx)
 	defer iterator.Close()
 
+	fmt.Println("============== staking => ApplyAndReturnValidatorSetUpdates called =============, maxValidators: ", maxValidators)
 	for count := 0; iterator.Valid() && count < int(maxValidators); iterator.Next() {
 		// everything that is iterated in this loop is becoming or already a
 		// part of the bonded validator set
@@ -136,12 +138,14 @@ func (k Keeper) ApplyAndReturnValidatorSetUpdates(ctx sdk.Context) (updates []ab
 			panic("should never retrieve a jailed validator from the power store")
 		}
 
+		fmt.Println("============== staking => ApplyAndReturnValidatorSetUpdates called1 =============, valAddr: ", valAddr)
 		// if we get to a zero-power validator (which we don't bond),
 		// there are no more possible bonded validators
 		if validator.PotentialConsensusPower(k.PowerReduction(ctx)) == 0 {
 			break
 		}
 
+		fmt.Println("============== staking => ApplyAndReturnValidatorSetUpdates called2 =============")
 		// apply the appropriate state change if necessary
 		switch {
 		case validator.IsUnbonded():
